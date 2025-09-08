@@ -1,0 +1,9 @@
+{
+	"name": "df-checkpoint-rm554613",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1e7e4611-15ee-4bb3-8050-c2692d115921",
+		"tenantId": "11dbbfe2-89b8-4549-be10-cec364e59551"
+	}
+}
