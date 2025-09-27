@@ -407,7 +407,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "fluxo_transformacao_1",
+						"referenceName": "fluxo_transformacao",
 						"type": "DataFlowReference"
 					},
 					"compute": {

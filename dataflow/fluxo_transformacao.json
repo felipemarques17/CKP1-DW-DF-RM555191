@@ -1,13 +1,42 @@
 {
-	"name": "fluxo_transformacao_1",
+	"name": "fluxo_transformacao",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "armazena_dados",
+						"type": "DatasetReference"
+					},
+					"name": "Loja"
+				},
+				{
+					"dataset": {
+						"referenceName": "armazena_dados",
+						"type": "DatasetReference"
+					},
+					"name": "endloja"
+				}
+			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "join1"
+				}
+			],
 			"scriptLines": [
-				""
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Loja",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> endloja",
+				"Loja, endloja join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1"
 			]
 		}
 	}
