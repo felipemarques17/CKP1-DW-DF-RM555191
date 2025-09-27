@@ -148,7 +148,15 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "fluxo_transformacao",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Loja": {
+								"nome_do_arquivo": "raw_db_loja"
+							},
+							"endloja": {
+								"nome_do_arquivo": "raw_db_end_loja"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
