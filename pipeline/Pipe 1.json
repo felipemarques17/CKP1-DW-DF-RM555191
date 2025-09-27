@@ -54,7 +54,10 @@
 				"outputs": [
 					{
 						"referenceName": "armazena_dados",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"nome_do_arquivo": "raw_db_loja"
+						}
 					}
 				]
 			},
@@ -110,7 +113,10 @@
 				"outputs": [
 					{
 						"referenceName": "armazena_dados",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"nome_do_arquivo": "raw_db_end_loja"
+						}
 					}
 				]
 			},
@@ -166,7 +172,10 @@
 				"outputs": [
 					{
 						"referenceName": "armazena_dados",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"nome_do_arquivo": "raw_db_logradouro"
+						}
 					}
 				]
 			},
@@ -222,7 +231,10 @@
 				"outputs": [
 					{
 						"referenceName": "armazena_dados",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"nome_do_arquivo": "raw_db_bairro"
+						}
 					}
 				]
 			},
@@ -278,7 +290,10 @@
 				"outputs": [
 					{
 						"referenceName": "armazena_dados",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"nome_do_arquivo": "raw_db_cidade"
+						}
 					}
 				]
 			},
@@ -334,9 +349,73 @@
 				"outputs": [
 					{
 						"referenceName": "armazena_dados",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"nome_do_arquivo": "raw_db_estado"
+						}
 					}
 				]
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "data db_loja",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "data db_end_loja",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "data db_logradouro",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "data db_bairro",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "data db_cidade",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "data db_estado",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "fluxo_transformacao_1",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"annotations": []
