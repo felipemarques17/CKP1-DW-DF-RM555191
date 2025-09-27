@@ -155,6 +155,16 @@
 							},
 							"endloja": {
 								"nome_do_arquivo": "raw_db_end_loja"
+							},
+							"sink1": {
+								"nome_do_arquivo": "rw"
+							}
+						},
+						"linkedServiceParameters": {
+							"sink1": {
+								"schemaLinkedService": {
+									"nome_do_arquivo": "ew"
+								}
 							}
 						}
 					},
