@@ -1,0 +1,9 @@
+{
+	"name": "DF-CKP-RM555191",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "56d763e0-fa65-4d71-96e2-1a43a7b786b5",
+		"tenantId": "11dbbfe2-89b8-4549-be10-cec364e59551"
+	}
+}
