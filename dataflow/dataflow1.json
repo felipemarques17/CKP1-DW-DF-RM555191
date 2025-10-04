@@ -78,7 +78,8 @@
 				"     ignoreNoFilesFound: false) ~> DBENDCLI",
 				"source(output(",
 				"          CD_LOGRADOURO as integer,",
-				"          CD_BAIRRO as short",
+				"          NM_CIDADE as string,",
+				"          NM_ESTADO as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -100,6 +101,7 @@
 				"     broadcast: 'auto')~> join3",
 				"join3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     filePattern:'teste',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
