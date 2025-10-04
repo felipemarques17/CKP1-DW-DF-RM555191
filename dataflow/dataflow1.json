@@ -17,26 +17,79 @@
 						"type": "DatasetReference"
 					},
 					"name": "DBCLIFISICA"
+				},
+				{
+					"dataset": {
+						"referenceName": "armazena_dados",
+						"type": "DatasetReference"
+					},
+					"name": "DBENDCLI"
+				},
+				{
+					"dataset": {
+						"referenceName": "armazena_dados",
+						"type": "DatasetReference"
+					},
+					"name": "dblogradouro"
 				}
 			],
 			"sinks": [],
 			"transformations": [
 				{
 					"name": "join1"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "join3"
 				}
 			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          NR_CLIENTE as short,",
+				"          NM_CLIENTE as string,",
+				"          QT_ESTRELAS as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> DBCLIENTE",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          NR_CLIENTE as short,",
+				"          FL_SEXO as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> DBCLIFISICA",
-				"DBCLIENTE, DBCLIFISICA join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"source(output(",
+				"          NR_CLIENTE as short,",
+				"          CD_LOGRADOURO_CLI as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DBENDCLI",
+				"source(output(",
+				"          CD_LOGRADOURO as integer,",
+				"          CD_BAIRRO as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> dblogradouro",
+				"DBCLIENTE, DBCLIFISICA join(DBCLIENTE@NR_CLIENTE == DBCLIFISICA@NR_CLIENTE,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1"
+				"     broadcast: 'auto')~> join1",
+				"join1, DBENDCLI join(DBCLIFISICA@NR_CLIENTE == DBENDCLI@NR_CLIENTE,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"join2, dblogradouro join(CD_LOGRADOURO_CLI == CD_LOGRADOURO,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join3"
 			]
 		}
 	}

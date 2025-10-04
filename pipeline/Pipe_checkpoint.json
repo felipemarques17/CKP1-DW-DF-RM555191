@@ -133,7 +133,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select * \nfrom dburger.db_end_cli;",
+						"oracleReaderQuery": "select \n    nr_cliente,\n    cd_logradouro_cli\nfrom db_end_cli;",
 						"partitionOption": "None",
 						"numberPrecision": 38,
 						"numberScale": 18,
@@ -142,7 +142,8 @@
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobStorageWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -191,7 +192,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select *\nfrom dburger.db_logradouro;",
+						"oracleReaderQuery": "select \n    cd_logradouro,\n    cd_bairro\nfrom db_logradouro;",
 						"partitionOption": "None",
 						"numberPrecision": 38,
 						"numberScale": 18,
@@ -249,7 +250,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select * \nfrom db_bairro;",
+						"oracleReaderQuery": "select \n    cd_bairro,\n    cd_cidade\nfrom db_bairro; ",
 						"partitionOption": "None",
 						"numberPrecision": 38,
 						"numberScale": 18,
@@ -407,6 +408,81 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "db_cliente",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "DB_CLI_FISICA",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "DB_END_CLI",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "DB_LOGRADOURO",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"DBCLIENTE": {
+								"nome_do_arquivo": {
+									"value": "@activity('db_cliente').output",
+									"type": "Expression"
+								}
+							},
+							"DBCLIFISICA": {
+								"nome_do_arquivo": {
+									"value": "@activity('DB_CLI_FISICA').output",
+									"type": "Expression"
+								}
+							},
+							"DBENDCLI": {
+								"nome_do_arquivo": {
+									"value": "@activity('DB_END_CLI').output",
+									"type": "Expression"
+								}
+							},
+							"dblogradouro": {
+								"nome_do_arquivo": {
+									"value": "@activity('DB_LOGRADOURO').output",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"annotations": []
