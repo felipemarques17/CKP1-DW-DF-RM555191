@@ -191,18 +191,46 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select nr_cliente, nm_cliente from DBURGER.db_cliente;",
+						"oracleReaderQuery": "select *\nfrom dburger.db_logradouro;",
 						"partitionOption": "None",
 						"numberPrecision": 38,
 						"numberScale": 18,
 						"queryTimeout": "02:00:00"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "OracleTable1",
 						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "armazena_dados",
+						"type": "DatasetReference",
+						"parameters": {
+							"nome_do_arquivo": "raw_db_logradouro"
+						}
 					}
 				]
 			},
@@ -221,18 +249,46 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select nr_cliente, nm_cliente from DBURGER.db_cliente;",
+						"oracleReaderQuery": "select * \nfrom db_bairro;",
 						"partitionOption": "None",
 						"numberPrecision": 38,
 						"numberScale": 18,
 						"queryTimeout": "02:00:00"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "OracleTable1",
 						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "armazena_dados",
+						"type": "DatasetReference",
+						"parameters": {
+							"nome_do_arquivo": "raw_db_bairro"
+						}
 					}
 				]
 			},
@@ -251,18 +307,46 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select nr_cliente, nm_cliente from DBURGER.db_cliente;",
+						"oracleReaderQuery": "select \n cd_cidade,\n nm_cidade\nfrom db_cidade;\n",
 						"partitionOption": "None",
 						"numberPrecision": 38,
 						"numberScale": 18,
 						"queryTimeout": "02:00:00"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "OracleTable1",
 						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "armazena_dados",
+						"type": "DatasetReference",
+						"parameters": {
+							"nome_do_arquivo": "raw_db_cidade"
+						}
 					}
 				]
 			},
@@ -281,18 +365,46 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select nr_cliente, nm_cliente from DBURGER.db_cliente;",
+						"oracleReaderQuery": "select \n sg_estado,\n nm_estado\nfrom db_estado;",
 						"partitionOption": "None",
 						"numberPrecision": 38,
 						"numberScale": 18,
 						"queryTimeout": "02:00:00"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "OracleTable1",
 						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "armazena_dados",
+						"type": "DatasetReference",
+						"parameters": {
+							"nome_do_arquivo": "raw_db_estado"
+						}
 					}
 				]
 			}

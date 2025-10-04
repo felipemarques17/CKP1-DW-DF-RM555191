@@ -8,9 +8,6 @@
 		"parameters": {
 			"nome_do_arquivo": {
 				"type": "string"
-			},
-			"origemarquivo": {
-				"type": "String"
 			}
 		},
 		"annotations": [],
