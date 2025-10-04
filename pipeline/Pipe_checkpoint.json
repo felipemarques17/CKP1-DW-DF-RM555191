@@ -192,7 +192,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select \n    cd_logradouro,\n    cd_bairro\nfrom db_logradouro;",
+						"oracleReaderQuery": "SELECT\n    l.cd_logradouro,\n    C.nm_cidade AS NM_CIDADE,\n    E.nm_estado as NM_ESTADO\nFROM db_logradouro L\nINNER JOIN DB_BAIRRO B ON l.cd_bairro=b.cd_bairro\nINNER JOIN DB_CIDADE C ON b.cd_cidade=c.cd_cidade\nINNER JOIN DB_ESTADO E ON c.sg_estado=e.sg_estado",
 						"partitionOption": "None",
 						"numberPrecision": 38,
 						"numberScale": 18,
@@ -474,6 +474,9 @@
 									"value": "@activity('DB_LOGRADOURO').output",
 									"type": "Expression"
 								}
+							},
+							"sink1": {
+								"nome_do_arquivo": "teste"
 							}
 						}
 					},
